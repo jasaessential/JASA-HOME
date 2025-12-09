@@ -1,237 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfectly Aligned JASA ESSENTIAL (Clean Redirect Final)</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JASA Brand Splash</title>
+  
+  <!-- SEO & Brand Identity -->
+  <meta name="description" content="A modern, aesthetic landing page for the JASA brand with redirection capabilities.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- 
+    ASSETS & ICONS 
+    Create a folder named 'assets' in your public/root directory.
+    Add your images there with these filenames:
+    - favicon.png
+    - apple-touch-icon.png
+    - og-image.png
+  -->
+  <link rel="icon" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <!-- SOCIAL MEDIA / OPEN GRAPH -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="JASA Brand Splash">
+  <meta property="og:description" content="Innovating the Future with JASA.">
+  <meta property="og:image" content="/assets/og-image.png">
+  <meta property="og:url" content="https://jasaessential.com">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* * GLOBAL STYLES AND VARIABLES */
+    :root {
+      /* Responsive font sizes using viewport width */
+      --main-font-size: 18vw; 
+      --tagline-font-size: 4vw;
+      --dot-animation-duration: 25s;
+      --grid-size: 50px; 
+      --dot-size: 3px; 
+      /* Brand Colors - Updated dynamically via JS */
+      --brand-color-dark: #60a5fa; /* Default Fallback */
+      --brand-color-light: #ffffff; /* White */
+      --tagline-color: #000000; /* Default Text Color */
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-width: 100vw;
+      display: flex; 
+      flex-direction: column;
+      justify-content: center; 
+      align-items: center;
+      /* Gradient from Random Color (bottom) to White (top) */
+      background: linear-gradient(to top, var(--brand-color-dark), var(--brand-color-light));
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden; 
+      position: relative;
+      transition: transform 1.2s cubic-bezier(0.8, 0.05, 0.2, 0.95), 
+                  opacity 1.2s cubic-bezier(0.8, 0.05, 0.2, 0.95);
+      padding: 0; 
+      box-sizing: border-box;
+    }
+
+    /* * BACKGROUND ANIMATION STYLES */
+    .dot-grid {
+      position: absolute;
+      top: 0;
+      width: 100vw; 
+      left: 50%; 
+      transform: translateX(-50%) translateY(0%);
+      height: 200%;
+      background-image: radial-gradient(circle, white var(--dot-size), transparent var(--dot-size));
+      background-size: var(--grid-size) var(--grid-size);
+      animation: moveGrid var(--dot-animation-duration) linear infinite;
+      z-index: 0;
+      opacity: 0.4; 
+    }
+
+    @keyframes moveGrid {
+      from { transform: translateX(-50%) translateY(0%); }
+      to   { transform: translateX(-50%) translateY(-50%); } 
+    }
+
+    /* * MAIN CONTENT (JASA Logo) STYLES */
+    .brand-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      z-index: 1; 
+      width: 100%;
+      max-width: 100vw; 
+      margin: 0;
+      padding: 0 5vw; /* Safe area for edges */
+      box-sizing: border-box;
+    }
+
+    .logo-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* Ensures the wrapper fits the content exactly */
+      width: min-content; 
+    }
+
+    /* Logo Styling */
+    .brand-logo {
+      display: flex;
+      justify-content: space-between; 
+      width: max-content; /* Critical: Logo determines the width */
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      margin: 0;
+      padding: 0;
+      line-height: 0.9; 
+      white-space: nowrap;
+      /* JASA Logo stays white typically, unless handled otherwise */
+      color: white; 
+      text-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Subtle shadow for better visibility on light backgrounds */
+    }
+
+    .brand-logo span {
+      display: inline-block;
+      font-size: var(--main-font-size);
+      font-weight: 700;
+      margin: 0; 
+      padding: 0;
+      letter-spacing: -0.02em; 
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; }
+    }
+
+    /* Tagline (ESSENTIAL) Styling */
+    .tagline {
+      /* Flex with space-between pushes first letter to far left and last to far right */
+      display: flex;
+      justify-content: space-between; 
+      width: 100%; /* Will match parent width, which matches logo width */
+      margin: 0; 
+      padding: 0;
+      line-height: 1;
+      opacity: 0; /* Hidden until width is calculated */
+      transition: opacity 0.5s ease;
+      white-space: nowrap;
+      /* Dynamic Color based on background */
+      color: var(--tagline-color);
+    }
     
-    <!-- * 1. PROJECT PLACEHOLDERS * -->
-    <!-- FAVICON LINK: Uncomment and replace href when ready -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    .tagline span {
+      font-size: var(--tagline-font-size);
+      font-weight: 700;
+      display: inline-block;
+    }
     
-    <!-- EXTERNAL CSS LINK: Uncomment this line to link to your custom stylesheet -->
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-    
-    <!-- 2. Bootstrap CSS CDN (Retained) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-    <!-- Use Inter font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-    
-    <style>
-        /* * 1. BASE STYLES & VARIABLES 
-         */
+    .tagline.visible {
+        opacity: 1;
+        animation: blinkText 2s infinite;
+    }
+
+    /* Tagline stagger delays */
+    .tagline span { opacity: 0; animation: fadeUp 1s ease forwards; }
+    .tagline span:nth-child(1) { animation-delay: 0.5s; }
+    .tagline span:nth-child(2) { animation-delay: 0.6s; }
+    .tagline span:nth-child(3) { animation-delay: 0.7s; }
+    .tagline span:nth-child(4) { animation-delay: 0.8s; }
+    .tagline span:nth-child(5) { animation-delay: 0.9s; }
+    .tagline span:nth-child(6) { animation-delay: 1.0s; }
+    .tagline span:nth-child(7) { animation-delay: 1.1s; }
+    .tagline span:nth-child(8) { animation-delay: 1.2s; }
+    .tagline span:nth-child(9) { animation-delay: 1.3s; }
+
+    @keyframes blinkText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* * MOBILE VIEW OPTIMIZATION */
+    @media (max-width: 768px) {
         :root {
-            --dot-size: 0.4vw; 
-            --dot-spacing: 5vw;
-            --animation-duration: 1.5s; /* Max fast dots */
-            --dynamic-color: #4169E1; 
+            --main-font-size: 20vw; 
+            --tagline-font-size: 4.5vw;
+            --grid-size: 30px; 
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            overflow: hidden; 
-            transition: background-color 0.5s ease;
+    }
+    
+    /* * LARGE SCREEN OPTIMIZATION */
+    @media (min-width: 1200px) {
+        :root {
+            --main-font-size: 8vw;
+            --tagline-font-size: 1.8vw;
         }
-
-        /* * 2. GRADIENT BACKGROUND & DOTS
-         */
-        .background-gradient {
-            background: linear-gradient(
-                to bottom, 
-                white 0%,            
-                var(--dynamic-color) 50%,         
-                white 100%           
-            );
-            background-attachment: fixed;
-            width: 100%;
-            height: 100vh;
-        }
-        
-        #dot-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0; 
-            
-            background-image: radial-gradient(
-                circle at center, 
-                rgba(255, 255, 255, 0.3) var(--dot-size),
-                transparent var(--dot-size)
-            );
-
-            background-size: var(--dot-spacing) var(--dot-spacing);
-            animation: scrollUp var(--animation-duration) linear infinite; 
-        }
-
-        /* * 3. KEYFRAMES FOR DOTS (Only dots are animated)
-         */
-        @keyframes scrollUp {
-            from { background-position: 0 0; }
-            to { background-position: 0 calc(var(--dot-spacing) * -1); }
-        }
-        
-        /* * 4. BRANDING TEXT STYLING 
-         */
-        .brand-container {
-            position: relative;
-            z-index: 10;
-            display: inline-block; 
-            text-align: center;
-            opacity: 1; 
-        }
-
-        /* JASA - Large, bold text (Static) */
-        .brand-text {
-            display: block;
-            font-weight: 900;
-            color: white; 
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
-            font-size: clamp(4rem, 20vw, 12rem); 
-            line-height: 1;
-            letter-spacing: 0; 
-            word-spacing: 0;
-            white-space: nowrap;
-        }
-        
-        /* ESSENTIAL - Alignment and styling (Static, Instant Load) */
-        .sub-text {
-            display: block;
-            font-weight: 900; 
-            color: #F0F0F0; 
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            line-height: 1.2;
-            font-size: clamp(1rem, 3.5vw, 3rem); 
-            margin-top: clamp(0.5rem, 1vw, 1rem); 
-            
-            /* --- ALIGNMENT TRICK --- */
-            width: 100%; 
-            text-align: justify; 
-            text-align-last: justify;
-            word-spacing: 1.25vw; 
-            letter-spacing: 0; 
-            opacity: 1; 
-        }
-
-        /* Forcing single-line justification */
-        .sub-text::after {
-            content: '';
-            display: inline-block;
-            width: 100%;
-        }
-
-        /* * 5. MEDIA QUERIES FOR RESPONSIVENESS (Alignment and Dots) */
-
-        /* Tablet (768px and up) */
-        @media (min-width: 768px) {
-            :root {
-                --dot-size: 0.4vw;
-                --dot-spacing: 4vw;
-            }
-            .sub-text {
-                word-spacing: 0.9vw;
-            }
-        }
-
-        /* Desktop (1024px and up) */
-        @media (min-width: 1024px) {
-            :root {
-                --dot-size: 0.3vw;
-                --dot-spacing: 3.5vw;
-            }
-            .sub-text {
-                word-spacing: 0.8vw;
-            }
-        }
-    </style>
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-<body class="background-gradient d-flex justify-content-center align-items-center vh-100">
+<body>
 
-    <!-- The animated dot grid overlay -->
-    <div id="dot-overlay"></div>
+  <!-- Background Grid of Symmetry Dots -->
+  <div class="dot-grid"></div>
 
-    <!-- The centered, static brand text block -->
-    <div class="brand-container">
-        <!-- JASA (Static) -->
-        <span class="brand-text select-none">
-            JASA
-        </span>
-        <!-- ESSENTIAL (Aligned perfectly under JASA, Static) -->
-        <span class="sub-text select-none">
-            E S S E N T I A L
-        </span>
+  <!-- Main Brand Logo Container -->
+  <div class="brand-container">
+    <!-- The wrapper shrinks to fit the JASA text exactly -->
+    <div class="logo-wrapper" id="logo-wrapper">
+      
+      <!-- JASA Logo -->
+      <div class="brand-logo" id="jasa-logo">
+        <span>J</span><span>A</span><span>S</span><span>A</span>
+      </div>
+
+      <!-- Tagline: 'justify-content: space-between' ensures E aligns with J and L aligns with A -->
+      <div class="tagline" id="tagline">
+        <span>E</span><span>S</span><span>S</span><span>E</span>
+        <span>N</span><span>T</span><span>I</span><span>A</span><span>L</span>
+      </div>
+      
     </div>
+  </div>
+  
+  <div id="root" style="display: none;"></div>
+  
+  <script>
+    /**
+     * RANDOM THEME LOGIC
+     * Picks a random background color on load.
+     * Sets ESSENTIAL text color to White ONLY if background is Black.
+     * Otherwise sets ESSENTIAL text color to Black.
+     */
+    const THEMES = [
+      { color: '#16a34a', name: 'Green',         taglineColor: '#000000' }, 
+      { color: '#86efac', name: 'Light Green',   taglineColor: '#000000' }, 
+      { color: '#1e40af', name: 'Royal Blue',    taglineColor: '#000000' }, 
+      { color: '#334155', name: 'Dark Grey',     taglineColor: '#000000' }, 
+      { color: '#000000', name: 'Black',         taglineColor: '#ffffff' }  
+    ];
 
-    <!-- Bootstrap JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <!-- EXTERNAL JS LINK: Uncomment this line to link to your custom script -->
-    <!-- <script src="script.js"></script> -->
-
-    <script>
-        // Define the color options for the dynamic background
-        const colors = {
-            'blue': '#4169E1',        // Royal Blue
-            'dark-gray': '#4F4F4F',   // Darker Gray
-            'green': '#28A745'        // Vibrant Green
-        };
+    function applyRandomTheme() {
+        const theme = THEMES[Math.floor(Math.random() * THEMES.length)];
+        const root = document.documentElement;
         
-        // * PLACEHOLDER WEB LINKS (Add your desired URLs here) *
-        // This array defines the links the user will be redirected to randomly.
-        const redirectLinks = [
-            https://jasaessential00.netlify.app/
-        ];
+        // Apply Variables
+        root.style.setProperty('--brand-color-dark', theme.color);
+        root.style.setProperty('--tagline-color', theme.taglineColor);
         
-        const REDIRECT_DELAY_MS = 5000; // 5 seconds
+        // Update Mobile Browser Theme Color
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) metaThemeColor.setAttribute('content', theme.color);
+
+        console.log(`Theme Applied: ${theme.name}`);
+    }
+    
+    // Apply immediately
+    applyRandomTheme();
+
+
+    // Configuration
+    const REDIRECT_URLS = [
+      "https://jasaessential00.netlify.app"
+    ]; 
+    const SLIDE_DURATION_MS = 1200;    
+    
+    const body = document.body;
+    const jasaLogo = document.getElementById('jasa-logo');
+    const tagline = document.getElementById('tagline');
+    const wrapper = document.getElementById('logo-wrapper');
+    
+    /**
+     * ALIGNMENT LOGIC
+     * 1. The wrapper is width: min-content (shrinks to JASA).
+     * 2. JASA determines the width.
+     * 3. Tagline is width: 100% of wrapper.
+     * 4. Tagline flex space-between spreads letters to edges.
+     */
+    function alignTagline() {
+        if (!jasaLogo || !tagline) return;
         
-        /**
-         * Sets a random background color on load.
-         */
-        function setDynamicColor() {
-            const colorKeys = Object.keys(colors);
-            const randomKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
-            const randomColor = colors[randomKey];
-            document.documentElement.style.setProperty('--dynamic-color', randomColor);
+        // Simply triggering a reflow to ensure CSS constraints apply
+        const width = jasaLogo.offsetWidth;
+        if (width > 0) {
+            tagline.classList.add('visible');
         }
-        
-        /**
-         * Selects a random link and redirects the user after the delay.
-         */
-        function performRedirect() {
-            // Select a random link
-            const randomIndex = Math.floor(Math.random() * redirectLinks.length);
-            const destinationUrl = redirectLinks[randomIndex];
-            
-            console.log(Redirecting after ${REDIRECT_DELAY_MS / 1000} seconds to: ${destinationUrl});
-            
-            // Redirect using replace() to prevent back navigation issues
-            window.location.replace(destinationUrl);
-        }
+    }
 
-        /**
-         * Initializes the page and starts the redirect timer.
-         */
-        function initializePage() {
-            setDynamicColor();
-            
-            // Start the redirect timer, running silently
-            setTimeout(performRedirect, REDIRECT_DELAY_MS);
-        }
+    // Observers to handle all resize/load events
+    const resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(alignTagline);
+    });
+    
+    if (jasaLogo) resizeObserver.observe(jasaLogo);
+    if (wrapper) resizeObserver.observe(wrapper);
 
-        // --- Initialization ---
-        window.onload = initializePage;
+    // Font loading check
+    if (document.fonts) {
+        document.fonts.ready.then(alignTagline);
+    }
 
-        function handleResize() {
-            console.log(Window width: ${window.innerWidth}px. Dynamic color set.);
-        }
+    window.addEventListener('load', alignTagline);
+    window.addEventListener('resize', alignTagline);
+    
+    /**
+     * Redirect Logic
+     */
+    function startFadeOutAndRedirect() {
+        const randomUrl = REDIRECT_URLS[Math.floor(Math.random() * REDIRECT_URLS.length)];
+        body.style.transform = 'translateX(-10vw)';
+        body.style.opacity = '0';
+        setTimeout(() => {
+            window.location.href = randomUrl;
+        }, SLIDE_DURATION_MS);
+    }
+    
+    function initSplash() {
+        alignTagline();
+        setTimeout(startFadeOutAndRedirect, 3000);
+    }
 
-        window.addEventListener('resize', handleResize);
-    </script>
+    document.addEventListener('DOMContentLoaded', initSplash);
+  </script>
+
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>
